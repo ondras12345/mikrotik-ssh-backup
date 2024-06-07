@@ -1,5 +1,5 @@
 # Mikrotik-SSH-backup
-Automatically create binary backups and configuration export of Mikrotik
+Automatically create binary backups and configuration exports of Mikrotik
 RouterOS devices via SSH.
 
 
