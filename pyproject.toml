@@ -2,6 +2,7 @@
 requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
+
 [project]
 dynamic = ["version"]
 name = "mikrotik-ssh-backup"
@@ -17,6 +18,13 @@ classifiers = [
 dependencies = [
     "PyYAML >= 6.0",
 ]
+
+
+[project.urls]
+Homepage = "https://github.com/ondras12345/mikrotik-ssh-backup"
+Repository = "https://github.com/ondras12345/mikrotik-ssh-backup.git"
+Issues = "https://github.com/ondras12345/mikrotik-ssh-backup/issues"
+
 
 [project.scripts]
 mikrotik-ssh-backup = "mikrotik_ssh_backup:main"

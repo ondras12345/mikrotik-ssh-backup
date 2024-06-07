@@ -3,6 +3,15 @@ Automatically create binary backups and configuration export of Mikrotik
 RouterOS devices via SSH.
 
 
+## Installation
+It is recommended to use [`pipx`](https://github.com/pypa/pipx) for
+installing standalone applications:
+```sh
+pipx install git+https://github.com/ondras12345/mikrotik-ssh-backup.git
+```
+(However, `pip` should also work.)
+
+
 ## Setup
 Only public key SSH authentication is supported.
 Add an entry to your `~/.ssh/config` file:
@@ -39,7 +48,7 @@ copying to repo
 making binary backup
 Configuration backup saved
 downloading
-autobak.backup                                                                                           100%  153KB   4.3MB/s   00:00
+autobak.backup                                   100%  153KB   4.3MB/s   00:00
 binary backup written to tracked/my_router_20240607T230237.backup size: 156213
 done
 ```
