@@ -15,7 +15,7 @@ from pprint import pprint
 @dataclass
 class Router:
     ssh_host: str
-    filename: str
+    filename_prefix: str
     # default for RouterOS 7
     export_command: str = "/export show-sensitive"
     backup_command: str = "/system/backup save name=autobak dont-encrypt=yes"
@@ -90,7 +90,7 @@ def main():
         for router_name, cnf in config["routers"].items():
             router = Router(
                 ssh_host=cnf.get("ssh_host", router_name),
-                filename=cnf.get("filename_prefix", router_name),
+                filename_prefix=cnf.get("filename_prefix", router_name),
             )
             if "backup_command" in cnf:
                 router.backup_command = cnf["backup_command"]
@@ -114,15 +114,15 @@ def main():
     if args.diff:
         subprocess.run(
             f'ssh {router.ssh_host} "{router.export_command}" | '
-            f'diff --color -u "{router.filename}.rsc" -',
+            f'diff --color -u "{router.filename_prefix}.rsc" -',
             shell=True
         )
         sys.exit(0)
 
     time_suffix = datetime.datetime.now().strftime("%Y%m%dT%H%M%S")
     config["tracked_dir"].mkdir(parents=True, exist_ok=True)
-    filename_rsc = config["tracked_dir"] / f"{router.filename}_{time_suffix}.rsc"
-    filename_binary = config["tracked_dir"] / f"{router.filename}_{time_suffix}.backup"
+    filename_rsc = config["tracked_dir"] / f"{router.filename_prefix}_{time_suffix}.rsc"
+    filename_binary = config["tracked_dir"] / f"{router.filename_prefix}_{time_suffix}.backup"
 
     if args.export:
         print("exporting")
@@ -134,7 +134,7 @@ def main():
         print("export written to", filename_rsc)
 
         print("copying to repo")
-        shutil.copyfile(filename_rsc, config["repo_dir"] / (router.filename + ".rsc"))
+        shutil.copyfile(filename_rsc, config["repo_dir"] / (router.filename_prefix + ".rsc"))
 
     if args.backup:
         print("making binary backup")
