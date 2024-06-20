@@ -88,6 +88,8 @@ def main():
         config["repo_dir"] = Path(config.get("repo_dir", "."))
 
         for router_name, cnf in config["routers"].items():
+            if cnf is None:
+                cnf = {}
             router = Router(
                 ssh_host=cnf.get("ssh_host", router_name),
                 filename_prefix=cnf.get("filename_prefix", router_name),
